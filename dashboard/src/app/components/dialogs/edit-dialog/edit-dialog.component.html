@@ -1,0 +1,53 @@
+<h2>Edit Company</h2>
+<form [formGroup]="form">
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Company Name</mat-label>
+    <input matInput formControlName="companyName">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>KRA Pin</mat-label>
+    <input matInput formControlName="kraPin">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Contact Person No</mat-label>
+    <input matInput formControlName="contactPersonNo">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Max Orders</mat-label>
+    <input matInput type="number" formControlName="maxOrders">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Min Orders</mat-label>
+    <input matInput type="number" formControlName="minOrders">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>City</mat-label>
+    <input matInput type="text" formControlName="city">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Constituency</mat-label>
+    <input matInput type="text" formControlName="constituency">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Street</mat-label>
+    <input matInput type="text" formControlName="street">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>County</mat-label>
+    <input matInput type="text" formControlName="county">
+  </mat-form-field>
+
+  <div style="margin-top: 1rem; text-align: right;">
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="onSave()">Update</button>
+  </div>
+</form>
+
+

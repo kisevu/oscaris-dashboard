@@ -1,0 +1,115 @@
+services:
+  discovery-service:
+    image: oscaris-discovery-service:latest
+    container_name: oscaris-discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - oscaris-network
+
+  gateway-service:
+    image: oscaris-gateway-service:latest
+    container_name: oscaris-gateway-service
+    ports:
+      - "8080:8080"
+    networks:
+      - oscaris-network
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://oscaris-discovery-service:8761/eureka/
+    depends_on:
+      - discovery-service
+
+
+  auth-service:
+    image: oscaris-auth-service:latest
+    container_name: oscaris-auth-service
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://oscaris-sqlserver:1433;databaseName=oscaris_db;encrypt=true;trustServerCertificate=true
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: Kevin@123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.SQLServerDialect
+      SPRING_APPLICATION_NAME: AUTH-SERVICE
+      SERVER_PORT: 8000
+    depends_on:
+      - oscaris-sqlserver
+      - discovery-service
+    networks:
+      - oscaris-network
+
+
+  invoice-service:
+    image: oscaris-invoice-service:latest
+    container_name: oscaris-invoice-service
+    depends_on:
+      - mongo
+    networks:
+      - oscaris-network
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATA_MONGODB_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
+
+  company-service:
+    image: oscaris-company-service:latest
+    container_name: oscaris-company-service
+    depends_on:
+      - mongo
+    networks:
+      - oscaris-network
+    environment:
+      SPRING_DATA_MONGO_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
+
+  mongo:
+    image: mongo:latest
+    container_name: oscaris-mongo-caterers
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: oscaris_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - oscaris-network
+
+
+  oscaris-sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-CU21-ubuntu-20.04
+    container_name: oscaris-sqlserver
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: "Kevin@123"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - ./sqlserver:/docker-entrypoint-initdb
+    networks:
+      - oscaris-network
+    command: |
+      /bin/bash -c "
+        /opt/mssql/bin/sqlservr &
+
+        echo 'Waiting for SQL Server to start...'
+        for i in {1..30}; do
+          /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Kevin@123' -Q 'SELECT 1' && break
+          sleep 2
+        done
+
+        echo 'Creating database oscaris-db...'
+        /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Kevin@123' -i /docker-entrypoint-initdb/init.sql
+
+        wait
+      "
+      
+  
+
+networks:
+  oscaris-network:
+volumes:
+  sqlserver-data:
+  mongo-data:

@@ -1,0 +1,26 @@
+<div class="container">
+  <h3>Here are the employees</h3>
+  <table class="table">
+    <tr>
+      <th>First Name</th>
+      <th>Second Name</th>
+      <th>Daily Rate</th>
+      <th>ID No</th>
+      <th>residential Area</th>
+      <th>Days Per Month</th>
+    </tr>
+    <tbody>
+      @for (employee of employees; track $index) {
+        <td>{{ employee.firstName }}</td>
+        <td>{{ employee.secondName }}</td>
+        <td>{{ employee.ratePerDay }}</td>
+        <td>{{ employee.identificationNo }}</td>
+        <td>{{ employee.residentialArea }}</td>
+        <td>{{ employee.daysPerMonth }}</td>
+      } @empty {
+        <p>Ooops! No data has been retrieved for rendering</p>
+      }
+      <td></td>
+    </tbody>
+  </table>
+</div>

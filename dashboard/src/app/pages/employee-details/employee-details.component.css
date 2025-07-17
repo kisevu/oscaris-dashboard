@@ -1,0 +1,16 @@
+
+
+.edit{
+  height: 15%;
+}
+
+
+.remove {
+  height: 15%;
+}
+
+
+.button-action {
+  display: flex;
+  padding: 20px 2px;
+}

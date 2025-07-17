@@ -1,0 +1,38 @@
+
+
+<table class="table table-success table-bordered">
+  <h3>Employees Records <span><i class="bi bi-person-badge-fill"></i></span></h3>
+  <tr>
+    <th class="col-span-3">First Name</th>
+    <th>Second Name</th>
+    <th>ID NO:</th>
+    <th>Residential Area</th>
+    <th>Rate </th>
+    <th class="col-span-3">Days Worked</th>
+    <th></th>
+  </tr>
+  @for (employee of employees$ | async ; track $index) {
+    <tr>
+      <td class="col-span-3">{{employee.firstName}}</td>
+      <td>{{employee.secondName}}</td>
+      <td>{{employee.identificationNo}}</td>
+      <td>{{employee.residentialArea}}</td>
+      <td>{{employee.ratePerDay}}</td>
+      <td>{{employee.daysPerMonth}}</td>
+      <td class="button-action">
+         <button class="btn btn-success mx-3 edit" (click)="edit(employee.identificationNo)">
+          <span><i class="bi bi-arrow-right-short"></i></span>edit employee</button>
+
+         <button class="btn btn-danger mx-3 remove" (click)="remove(employee.identificationNo)">
+          <span><i class="bi bi-arrow-right-short"></i></span>remove employee</button>
+      </td>
+
+    </tr>
+  }
+</table>
+
+
+<div class="buttons">
+  <button mat-button (click)="openDialog()" class="btn btn-primary mx-3">
+    <span><i class="bi bi-arrow-right-short"></i></span>add employee</button>
+</div>

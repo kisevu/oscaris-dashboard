@@ -1,0 +1,75 @@
+
+<!-- firstName:string;
+  secondName: string;
+  ratePerDay: number;
+  identificationNo: string;
+  residentialArea: string;
+  daysPerMonth: number; -->
+
+<h2 mat-dialog-title>Add Employee</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Add a new Employee to Oscaris Caterers</h3>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="form">
+
+  <div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="firstName" class="col-form-label">First Name: </label>
+  </div>
+  <div class="col-auto">
+    <input type="text" id="firstName" class="form-control" name="firstName" [formControl]="firstName"/>
+  </div>
+</div>
+
+
+<div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="secondName" class="col-form-label">Second Name:</label>
+  </div>
+  <div class="col-auto">
+    <input type="text" id="secondName" class="form-control" name="secondName" [formControl]="secondName"/>
+  </div>
+</div>
+
+<div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="ratePerDay" class="col-form-label">Rate Per Day: </label>
+  </div>
+  <div class="col-auto">
+    <input type="number" id="ratePerDay" class="form-control" name="ratePerDay" [formControl]="ratePerDay"/>
+  </div>
+</div>
+
+<div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="identificationNo" class="col-form-label">ID No: </label>
+  </div>
+  <div class="col-auto">
+    <input type="text" id="identificationNo" class="form-control" name="identificationNo" [formControl]="identificationNo"/>
+  </div>
+</div>
+
+<div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="residentialArea" class="col-form-label">Residential Area: </label>
+  </div>
+  <div class="col-auto">
+    <input type="text" id="residentialArea" class="form-control" name="firstName" [formControl]="residentialArea"/>
+  </div>
+</div>
+
+<div class="row g-3 align-items-center mb-2">
+  <div class="col-auto">
+    <label for="daysPerMonth" class="col-form-label">Days worked monthly:</label>
+  </div>
+  <div class="col-auto">
+    <input type="number" id="daysPerMonth" class="form-control" name="daysPerMonth" [formControl]="daysPerMonth"/>
+  </div>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" type="submit" cdkFocusInitial>submit</button>
+</mat-dialog-actions>
+  </form>
+</mat-dialog-content>
+

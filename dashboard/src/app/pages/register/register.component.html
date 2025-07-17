@@ -1,0 +1,52 @@
+
+<div class="container">
+  <div class="row m-4">
+    <div class="col-12">
+      <h1 class="text-center fw-100">Oscaris Caterers!</h1>
+    </div>
+  </div>
+
+  <div class="row">
+  <form class="col-6" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <div class="form-group m-2">
+      <label>First Name:</label>
+      <input type="text" class="form-control" placeholder="Enter first name" formControlName="firstName">
+      @if ((registerForm.controls['firstName'].dirty || registerForm.controls['firstName'].touched)) {
+        @if (registerForm.controls['firstName'].errors?.['required']) {
+          <small class="text-danger">First name is required.</small>
+        }
+        @if (registerForm.controls['firstName'].errors?.['pattern']) {
+          <small class="text-danger">First name does not match the required pattern</small>
+        }
+      }
+    </div>
+
+    <div class="form-group m-2">
+      <label>Last Name:</label>
+      <input type="text" class="form-control" placeholder="Enter last name" formControlName="lastName">
+    </div>
+
+    <div class="form-group m-2">
+      <label>Email:</label>
+      <input type="email" class="form-control" placeholder="Enter email" formControlName="email">
+    </div>
+
+    <div class="form-group m-2">
+      <label>Password:</label>
+      <input type="password" class="form-control" placeholder="Enter password" formControlName="password">
+    </div>
+
+    <div class="form-group m-2">
+      <input type="file" placeholder="upload your photo" formControlName="photo"  (change)="onPhotoSelected($event)"/>
+    </div>
+
+    <button class="btn btn-success m-2" type="submit" [disabled]="registerForm.invalid">submit</button>
+    <button class="btn btn-success m-2" (click)="toLogin()">login</button>
+  </form>
+  <div class="col-6">
+    <p>oscaris-caterers</p>
+    <img src="../../../assets/images/istockphoto-2004635695-1024x1024.jpg" alt="marinate">
+  </div>
+  </div>
+
+</div>

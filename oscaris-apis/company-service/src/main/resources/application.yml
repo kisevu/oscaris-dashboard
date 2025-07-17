@@ -1,0 +1,26 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://oscaris-mongo-caterers:27017/oscaris_db
+
+  server:
+    port: 8989
+    session:
+      cookie:
+        same-site: None
+        secure: true
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql: TRACE
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://oscaris-discovery-service:8761/eureka/

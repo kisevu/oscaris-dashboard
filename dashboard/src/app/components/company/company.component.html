@@ -1,0 +1,38 @@
+<div class="contain">
+  <table>
+    <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>KraPin</th>
+        <th>City</th>
+        <th>Constituency</th>
+        <th>County</th>
+        <th>Contact Person No</th>
+        <th>Max orders</th>
+        <th>Min orders</th>
+        <th>Street</th>
+        <th class="col-span-3"><button class="btn btn-primary" (click)="addComp()">Add Company</button></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      @if (loading$ | async ) {
+        @for (company of (companie$ |async) ?? []; track $index) {
+          <tr>
+            <td>{{ company.companyName }}</td>
+            <td>{{ company.kraPin }}</td>
+            <td>{{ company.city }}</td>
+            <td>{{ company.constituency }}</td>
+            <td>{{ company.county }}</td>
+            <td>{{ company.contactPersonNo }}</td>
+            <td>{{ company.maxOrders }}</td>
+            <td>{{ company.minOrders }}</td>
+            <td>{{ company.street }}</td>
+            <td><button class="btn btn-success" (click)="edit(company)">edit</button></td>
+            <td><button class="btn btn-danger" (click)="remove(company)">delete</button></td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

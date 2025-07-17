@@ -1,0 +1,109 @@
+<div class="container mt-2">
+  <header class="header">
+    <div class="header-content responsive-wrapper">
+      <div class="header-logo">
+        <a [routerLink]="'/'">
+          <div>
+            <img ngSrc="assets/images/martini-1787.png" alt="header" height="80" width="80" />
+          </div>
+        </a>
+      </div>
+      <div class="header-navigation nav-kevin">
+        <nav class="header-navigation-links">
+          <a [routerLink]="'/dashboard'" routerLinkActive="active-link">Dashboard</a>
+          <a [routerLink]="'/companies'" routerLinkActive="active-link">Companies</a>
+          <a [routerLink]="'/employees'"r outerLinkActive="active-link">Employees</a>
+          <a [routerLink]="'/stock'" routerLinkActive="active-link">Stock</a>
+          <a [routerLink]="'/orders'" routerLinkActive="active-link">Orders</a>
+          <a [routerLink]="'/invoices'" routerLinkActive="active-link">Invoices</a>
+          <a [routerLink]="'/suppliers'" routerLinkActive="active-link">Suppliers</a>
+          <a [routerLink]="'/debts'" routerLinkActive="active-link">Debts</a>
+          <button class="btn btn-success p-2"(click)="onLogout()">logout</button>
+        </nav>
+        <div class="header-navigation-actions">
+          <a href="#" class="button">
+            <i class="ph-lightning-bold"></i>
+            <span>Upgrade now</span>
+          </a>
+          <a href="#" class="icon-button">
+            <i class="ph-gear-bold"></i>
+          </a>
+          <a href="#" class="icon-button">
+            <i class="ph-bell-bold"></i>
+          </a>
+          <a href="#" class="avatar">
+            <img ngSrc="assets/images/icons8-anime-64.png" alt="hatman" width="100" height="100" />
+          </a>
+        </div>
+      </div>
+      <a href="#" class="button">
+        <i class="ph-list-bold"></i>
+        <span>Menu</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="responsive-wrapper">
+      <div class="main-header">
+        <h1>Expenses</h1>
+        <div class="search">
+          <input type="text" placeholder="Search" />
+          <button type="submit">
+            <i class="ph-magnifying-glass-bold"></i>
+          </button>
+        </div>
+      </div>
+      <div class="horizontal-tabs horizontal-kevin">
+        <a [routerLink]="'/city-mkt'" class="active">Meats | city market</a>
+        <a [routerLink]="'/dagoretti-mkt'">Meats | dagoretti </a>
+        <a [routerLink]="'/spices-rice'">Spices & Rice</a>
+        <a [routerLink]="'/bulk-shopping'">bulk | sam west</a>
+        <a [routerLink]="'/light-shopping'">light | Naivas</a>
+        <a [routerLink]="'/gas'">Gas</a>
+        <a [routerLink]="'/rent'">Rent</a>
+        <a [routerLink]="'/charcoal'">Charcoal</a>
+        <a [routerLink]="'/water'">Water</a>
+      </div>
+
+      <div class="content-header">
+        <div class="content-header-intro">
+          <h2 class="oscaris-header">Oscaris Caterers Power Dashboard</h2>
+          <p>
+            Everything you need is within your reach. Use provided menus for seamless interaction...
+          </p>
+        </div>
+        <div class="content-header-actions">
+          <a href="#" class="button">
+            <i class="ph-faders-bold"></i>
+            <span>Filters</span>
+          </a>
+          <a href="#" class="button">
+            <i class="ph-plus-bold"></i>
+            <span>invoice</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="content-panel panel-bg">
+          <div class="vertical-tabs vertical-kevin">
+            <a href="#" class="active">Weekly expenditure</a>
+            <a [routerLink]="'/fruits'">Fruits | Priscila</a>
+            <a [routerLink]="'/milton'">Vegetables | milton</a>
+            <a [routerLink]="'/market'">Market</a>
+            <a [routerLink]="'/potatoes'">Potatoes | Joel</a>
+            <a [routerLink]="'/juice'">Juice | orchad</a>
+            <a [routerLink]="'/soda'">Soda | kangemi depot</a>
+            <a [routerLink]="'/miscelleanous'">Miscelleanous</a>
+          </div>
+        </div>
+        <div class="container">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <app-footer></app-footer>
+</div>

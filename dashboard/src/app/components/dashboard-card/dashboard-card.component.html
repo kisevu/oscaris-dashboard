@@ -1,0 +1,58 @@
+<div class="card-container">
+
+
+
+
+  <ng-container *ngIf=" employeesAndCompanies$ | async as data">
+
+    @for (company of data.companies; track $index) {
+      <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>{{company.companyName}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{company.contactPersonNo}}</p>
+        </mat-card-content>
+        <mat-card-footer class="example-card-footer">
+          <mat-chip-set aria-label="Chihuahua traits">
+            <mat-chip>{{company.maxOrders}}</mat-chip>
+            <mat-chip>{{company.constituency}}</mat-chip>
+            <mat-chip>{{company.city}}</mat-chip>
+          </mat-chip-set>
+        </mat-card-footer>
+      </mat-card>
+  }
+
+
+  @for (employee of data.employees; track $index) {
+    <mat-card class="example-card" appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>{{employee.firstName}},{{employee.secondName}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Rate by per day: {{employee.ratePerDay}}</p>
+      </mat-card-content>
+      <mat-card-footer class="example-card-footer">
+        <mat-chip-set aria-label="Chihuahua traits">
+          <mat-chip>{{employee.residentialArea}}</mat-chip>
+          <mat-chip>{{employee.daysPerMonth}}</mat-chip>
+          <mat-chip>{{employee.ratePerDay}}</mat-chip>
+        </mat-chip-set>
+      </mat-card-footer>
+    </mat-card>
+}
+
+
+
+</ng-container>
+
+
+</div>
+
+
+
+
+
+
+
+

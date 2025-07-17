@@ -1,0 +1,11 @@
+/* add-company-modal.component.css */
+
+form > label {
+  padding-left: 10px;
+}
+
+form > button {
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+}

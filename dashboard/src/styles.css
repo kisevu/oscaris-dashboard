@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+  box-sizing: border-box;
+}
+
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  text-transform: capitalize;
+  /* background-color: #000033; */
+  /* color: #fff; */
+  --fontStyle: inherit;
+  background-image: url('./assets/images/delicacies.jpg') ;
+  background-size: cover;          /* Fills entire screen, keeps aspect ratio */
+  background-repeat: no-repeat;    /* Prevents tiling */
+  background-position: center;     /* Keeps image centered */
+  background-attachment: fixed;
+  /* background-color: darkorchid; */
+}
+
+/* shareble */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

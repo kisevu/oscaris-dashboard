@@ -1,0 +1,32 @@
+<div class="login-container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow-lg" style="min-width: 350px; background-color: rgba(255, 255, 255, 0.9);">
+    <h3 class="text-center mb-4">Login</h3>
+    <form (submit)="onLogin()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary mx-2">Login</button>
+      <button class=" btn btn-success" (click)="toRegister()">register</button>
+    </form>
+  </div>
+</div>
