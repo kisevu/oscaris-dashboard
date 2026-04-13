@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-client
+  labels:
+    app: discovery-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-client
+  template:
+    metadata:
+      labels:
+        app: discovery-client
+    spec:
+      containers:
+        - name: discovery-client
+#          image: docker.io/library/oscaris-discovery-service:latest #this is the imported image to the Microk8s cache/registry
+#          imagePullPolicy: Never
+          image: localhost:32000/oscaris-discovery-service:latest  # Registry version
+          imagePullPolicy: Always  # Pull from localhost:32000
+          ports:
+            - containerPort: 8761
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+              

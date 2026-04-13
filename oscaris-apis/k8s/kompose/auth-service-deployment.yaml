@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: auth
+  name: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: auth
+  template:
+    metadata:
+      labels:
+        io.kompose.service: auth
+    spec:
+      containers:
+        - env:
+            - name: SERVER_PORT
+              value: "8000"
+            - name: SPRING_APPLICATION_NAME
+              value: "AUTH"
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "Kevin@123"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:sqlserver://oscaris-sqlserver:1433;databaseName=oscaris_db;encrypt=true;trustServerCertificate=true"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "sa"
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb://oscaris-mongo-caterers:27017/oscaris_db"
+            - name: SPRING_JPA_DATABASE_PLATFORM
+              value: "org.hibernate.dialect.SQLServerDialect"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+            - name: SPRING_JPA_SHOW_SQL
+              value: "true"
+            - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+              value: "60000"  # 60s
+            - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
+              value: "0"      # Don't fail startup on init timeout
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-client-service:8761/eureka/"  # Critical!
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "true"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "true"
+            - name: SPRING_DATA_JPA_REPOSITORIES_ENABLED
+              value: "true"
+            - name: SPRING_JPA_DEFERRED_REPOSITORY_INITIALIZATION
+              value: "true"
+            - name: SPRING_JPA_MAPPING_CONTEXT_PATH
+              value: "classpath*:**/*.class"
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_DATA_JPA=DEBUG
+          image: localhost:32000/oscaris-auth-service:latest
+          imagePullPolicy: Always
+          name: oscaris-auth-service
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+      restartPolicy: Always

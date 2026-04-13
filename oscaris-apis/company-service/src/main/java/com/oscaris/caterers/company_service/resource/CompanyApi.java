@@ -20,7 +20,7 @@ public class CompanyApi {
         this.companyService = companyService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<?> addCompany(@RequestBody Company company ){
         this.companyService.addCompany(company);
         return ResponseEntity.status(HttpStatus.CREATED).build();

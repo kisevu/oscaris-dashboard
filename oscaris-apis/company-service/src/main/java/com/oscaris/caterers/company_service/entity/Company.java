@@ -25,4 +25,5 @@ public class Company {
     private int count;
     private Address address;
     private String phoneNumber;
+
 }

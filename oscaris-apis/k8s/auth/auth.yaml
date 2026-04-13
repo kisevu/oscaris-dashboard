@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  labels:
+    app: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: localhost:32000/oscaris-auth-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "kubernetes"
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:sqlserver://192.168.100.40:1433;databaseName=oscaris_db;encrypt=true;trustServerCertificate=true"  #kubectl describe pod
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "sa"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "Kevin@123"
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: "update"
+            - name: SPRING_JPA_SHOW_SQL
+              value: "true"
+            - name: SPRING_JPA_DATABASE_PLATFORM
+              value: "org.hibernate.dialect.SQLServerDialect"
+            - name: SPRING_APPLICATION_NAME
+              value: "AUTH-SERVICE"
+            - name: SERVER_PORT
+              value: "8000"
+            - name: SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT
+              value: "60000"  # 60s
+            - name: SPRING_DATASOURCE_HIKARI_INITIALIZATION_FAIL_TIMEOUT
+              value: "0"      # Don't fail startup on init timeout
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://discovery-client-service:8761/eureka/"  # Critical!
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "true"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "true"
+            - name: SPRING_DATA_JPA_REPOSITORIES_ENABLED
+              value: "true"
+            - name: SPRING_JPA_DEFERRED_REPOSITORY_INITIALIZATION
+              value: "true"
+            - name: SPRING_JPA_MAPPING_CONTEXT_PATH
+              value: "classpath*:**/*.class"
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_DATA_JPA=DEBUG
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
