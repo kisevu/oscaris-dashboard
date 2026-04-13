@@ -1,0 +1,18 @@
+apiVersion: v1
+data:
+  init.sql: |
+    -- 1. Create the database if not exists
+    IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'oscaris_db')
+    BEGIN
+        CREATE DATABASE oscaris_db;
+    END
+    GO
+
+    -- 2. Change context to the new database
+    USE oscaris_db;
+    GO
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: oscaris-sqlserver
+  name: oscaris-sqlserver-cm1

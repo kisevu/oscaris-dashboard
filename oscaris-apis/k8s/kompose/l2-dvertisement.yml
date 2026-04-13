@@ -1,0 +1,8 @@
+apiVersion: metallb.io/v1betav1
+kind: L2Advertisement
+metadata:
+  name: homelab-l2
+  namespace: oscaris
+spec:
+  ipAddressPools: 
+    - first-pool

@@ -35,6 +35,7 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.SQLServerDialect
       SPRING_APPLICATION_NAME: AUTH-SERVICE
       SERVER_PORT: 8000
+      SPRING_DATA_MONGODB_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
     depends_on:
       - oscaris-sqlserver
       - discovery-service
@@ -61,7 +62,7 @@ services:
     networks:
       - oscaris-network
     environment:
-      SPRING_DATA_MONGO_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
+      SPRING_DATA_MONGODB_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
 
   mongo:
     image: mongo:latest
