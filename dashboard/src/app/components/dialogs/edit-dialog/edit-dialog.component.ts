@@ -28,13 +28,11 @@ export class EditDialogComponent {
     this.form = this.fb.group({
     companyName: [{ value: data.companyName, disabled: true }], // Required, but not editable
     kraPin: [{value: data.kraPin, disabled:true}],
-    city: [data.city],
-    county: [data.county],
-    constituency: [data.constituency],
-    contactPersonNo: [data.contactPersonNo],
-    maxOrders: [data.maxOrders],
-    minOrders: [data.minOrders],
-    street: [data.street]
+    city: [data.address.city],
+    building: [data.address.building],
+    street: [data.address.street],
+    contactPerson: [data.contactPerson],
+    count: [data.count]
 });
   }
 

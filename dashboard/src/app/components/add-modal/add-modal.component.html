@@ -19,60 +19,39 @@
 
     <label>
       City:
-      <input [(ngModel)]="companyResponse.city" class="form-control p-2" name="city" required />
+      <input [(ngModel)]="companyResponse.address.city" class="form-control p-2" name="city" required />
     </label>
-
-    <label>
-      Constituency:
-      <input
-        [(ngModel)]="companyResponse.constituency"
-        class="form-control"
-        name="constituency"
-        required
-      />
-    </label>
-
     <label>
       Street:
-      <input [(ngModel)]="companyResponse.street" class="form-control" name="street" required />
+      <input [(ngModel)]="companyResponse.address.street" class="form-control" name="street" required />
     </label>
 
     <label>
-      County:
-      <input [(ngModel)]="companyResponse.county" class="form-control" name="county" required />
+      Building:
+      <input [(ngModel)]="companyResponse.address.building" class="form-control" name="building" required />
     </label>
 
     <label>
-      Contact Person No:
+      Contact Person:
       <input
-        [(ngModel)]="companyResponse.contactPersonNo"
+        [(ngModel)]="companyResponse.contactPerson"
         class="form-control"
-        name="contactPersonNo"
+        name="contactPerson"
         required
       />
     </label>
 
     <label>
-      Max Orders:
-      <input
-        type="number"
-        [(ngModel)]="companyResponse.maxOrders"
-        class="form-control"
-        name="maxOrders"
-        required
-      />
-    </label>
-
-    <label>
-      Min Orders:
+      Count:
       <input
         type="number"
-        [(ngModel)]="companyResponse.minOrders"
+        [(ngModel)]="companyResponse.count"
         class="form-control"
-        name="minOrders"
+        name="count"
         required
       />
     </label>
+
     <a href="/companies" (click)="onClose()">close</a>
     <button type="submit" class="btn btn-success">Save</button>
   </form>

@@ -1,27 +1,32 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Company } from '../../store/companies/company.model';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CompanyService {
-  private readonly apiUrl: string = environment.companiesBasePath;
+  private readonly companyUrl: string = environment.companyBaseUrl;
 
   http = inject(HttpClient);
 
   getCompanies(): Observable<Company[]> {
-    return this.http.get<Company[]>(`${this.apiUrl}/companies`);
+    return this.http.get<Company[]>(`${this.companyUrl}/companies`);
   }
 
   addCompany(company: Company): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add-company`, this.mapToSpringDTO(company));
+    const token = localStorage.getItem('access_token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post(`${this.companyUrl}/companies/add`, company,{headers} );
   }
 
+
   deleteCompany(companyName: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete`, {
+    return this.http.delete(`${this.companyUrl}/delete`, {
       params: { companyName },
     });
   }
@@ -45,22 +50,6 @@ export class CompanyService {
     if (params.contactPersonNo) httpParams = httpParams.set('contactPersonNo', params.contactPersonNo);
     if (params.maxOrders !== undefined) httpParams = httpParams.set('maxOrders', params.maxOrders.toString());
     if (params.minOrders !== undefined) httpParams = httpParams.set('minOrders', params.minOrders.toString());
-    return this.http.patch(`${this.apiUrl}/update`, null, { params: httpParams });
-  }
-
-  private mapToSpringDTO(form: Company) {
-    return {
-      companyName: form.companyName,
-      maxOrders: form.maxOrders,
-      minOrders: form.minOrders,
-      kraPin: form.kraPin,
-      contactPersonNo: form.contactPersonNo,
-      address: {
-        street: form.street, // or use a separate field if needed
-        city: form.city,
-        county: form.county,
-        constituency: form.constituency,
-      },
-    };
+    return this.http.patch(`${this.companyUrl}/update`, null, { params: httpParams });
   }
 }

@@ -18,13 +18,14 @@ export class AddModalComponent {
   companyResponse = {
     companyName: '',
     kraPin: '',
-    city: '',
-    constituency: '',
-    county: '',
-    contactPersonNo: '',
-    street: '',
-    maxOrders: null,
-    minOrders: null,
+    contactPerson: '',
+    count: '',
+    address: {
+      street: '',
+      city: '',
+      building: ''
+    },
+    phoneNumber: ''
   };
 
   onSave() {

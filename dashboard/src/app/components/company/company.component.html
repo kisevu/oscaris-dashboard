@@ -21,13 +21,11 @@
           <tr>
             <td>{{ company.companyName }}</td>
             <td>{{ company.kraPin }}</td>
-            <td>{{ company.city }}</td>
-            <td>{{ company.constituency }}</td>
-            <td>{{ company.county }}</td>
-            <td>{{ company.contactPersonNo }}</td>
-            <td>{{ company.maxOrders }}</td>
-            <td>{{ company.minOrders }}</td>
-            <td>{{ company.street }}</td>
+            <td>{{ company.address.city }}</td>
+            <td>{{ company.address.building }}</td>
+            <td>{{ company.address.street}}</td>
+            <td>{{ company.contactPerson }}</td>
+            <td>{{ company.count }}</td>
             <td><button class="btn btn-success" (click)="edit(company)">edit</button></td>
             <td><button class="btn btn-danger" (click)="remove(company)">delete</button></td>
           </tr>
