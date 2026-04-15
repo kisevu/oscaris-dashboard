@@ -2,7 +2,6 @@ package com.oscaris.caterers.auth.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -23,7 +22,6 @@ public class UserInfo {
     @Column(nullable = false)
     private int status = 1;
 
-    @Lob
     @Column(nullable = false)
     private String photoPath;
 

@@ -2,16 +2,15 @@ package com.oscaris.caterers.auth.api;
 
 import com.oscaris.caterers.auth.dtos.LoginUserDTO;
 import com.oscaris.caterers.auth.dtos.RegisterUserDTO;
+import com.oscaris.caterers.auth.dtos.RoleRequest;
 import com.oscaris.caterers.auth.dtos.responses.LoginResponse;
+import com.oscaris.caterers.auth.dtos.responses.RoleResponse;
 import com.oscaris.caterers.auth.entities.User;
 import com.oscaris.caterers.auth.services.AuthenticationService;
 import com.oscaris.caterers.auth.services.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Author: kev.Ameda
@@ -42,5 +41,17 @@ public class AuthResource {
         String jwtToken = jwtService.generateToken(authenticatedUser);
         LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
+    }
+
+    // administrator functionality
+    @PostMapping("/add-roles")
+    public ResponseEntity<?> addRoles(@RequestBody RoleRequest request){
+        RoleResponse response = authenticationService.addRole(request);
+        return ResponseEntity.ok(response.getMessage());
+    }
+    @PatchMapping("/assign-admin")
+    public ResponseEntity<?> assignAdmin( String email ){
+        String message = authenticationService.assignRole(email);
+        return ResponseEntity.ok(message);
     }
 }

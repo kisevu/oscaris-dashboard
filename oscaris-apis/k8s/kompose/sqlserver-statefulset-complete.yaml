@@ -1,0 +1,107 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oscaris-sqlserver
+  labels:
+    io.kompose.service: oscaris-sqlserver
+spec:
+  clusterIP: None
+  ports:
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
+  selector:
+    io.kompose.service: oscaris-sqlserver
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oscaris-sqlserver-cm1
+  labels:
+    io.kompose.service: oscaris-sqlserver
+data:
+  init.sql: |
+    IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'oscaris_db')
+    BEGIN CREATE DATABASE oscaris_db; END
+    GO
+    USE oscaris_db; GO
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: oscaris-sqlserver
+  labels:
+    io.kompose.service: oscaris-sqlserver
+spec:
+  serviceName: oscaris-sqlserver
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: oscaris-sqlserver
+  volumeClaimTemplates:
+    - metadata:
+        name: sqlserver-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: microk8s-hostpath
+  template:
+    metadata:
+      labels:
+        io.kompose.service: oscaris-sqlserver
+    spec:
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - name: oscaris-sqlserver
+          image: localhost:32000/mcr.microsoft.com/mssql/server:2019-CU21-ubuntu-20.04
+          imagePullPolicy: IfNotPresent  # 🔑 Local registry
+          ports:
+            - containerPort: 1433
+              protocol: TCP
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              value: Kevin@123
+          volumeMounts:
+            - mountPath: /var/opt/mssql
+              name: sqlserver-data
+            - mountPath: /docker-entrypoint-initdb.d  # 🔑 Auto-init
+              name: oscaris-sqlserver-cm1
+          readinessProbe:
+            exec:
+              command:
+                - /opt/mssql-tools/bin/sqlcmd
+                - -S
+                - localhost
+                - -U
+                - sa
+                - -P
+                - Kevin@123
+                - -Q
+                - "SELECT 1"
+            initialDelaySeconds: 60  # Increased
+            periodSeconds: 10
+          livenessProbe:
+            exec:
+              command:
+                - /opt/mssql-tools/bin/sqlcmd
+                - -S
+                - localhost
+                - -U
+                - sa
+                - -P
+                - Kevin@123
+                - -Q
+                - "SELECT 1"
+            initialDelaySeconds: 120
+            periodSeconds: 30
+      volumes:
+        - name: oscaris-sqlserver-cm1
+          configMap:
+            name: oscaris-sqlserver-cm1

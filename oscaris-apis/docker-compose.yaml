@@ -26,13 +26,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:sqlserver://oscaris-sqlserver:1433;databaseName=oscaris_db;encrypt=true;trustServerCertificate=true
-      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_URL: jdbc:postgresql://oscaris-pg:5432/oscaris_db
+      SPRING_DATASOURCE_USERNAME: kevin
       SPRING_DATASOURCE_PASSWORD: Kevin@123
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.SQLServerDialect
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       SPRING_APPLICATION_NAME: AUTH-SERVICE
       SERVER_PORT: 8000
       SPRING_DATA_MONGODB_URI: mongodb://oscaris-mongo-caterers:27017/oscaris_db
@@ -76,6 +76,26 @@ services:
       - mongo-data:/data/db
     networks:
       - oscaris-network
+
+  oscaris-pg:
+      image: postgres:13
+      container_name: oscaris-pg
+      restart: unless-stopped
+      environment:
+        POSTGRES_DB: oscaris_db
+        POSTGRES_USER: kevin
+        POSTGRES_PASSWORD: Kevin@123
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data  # Persist data
+      networks:
+        - oscaris-network
+      healthcheck:
+        test: [ "CMD-SHELL", "pg_isready -U kevin -d oscaris_db" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
 
 
   oscaris-sqlserver:
