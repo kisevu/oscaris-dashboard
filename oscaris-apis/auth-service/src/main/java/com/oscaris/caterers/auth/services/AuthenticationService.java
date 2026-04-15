@@ -2,7 +2,6 @@ package com.oscaris.caterers.auth.services;
 
 import com.oscaris.caterers.auth.dtos.LoginUserDTO;
 import com.oscaris.caterers.auth.dtos.RegisterUserDTO;
-import com.oscaris.caterers.auth.dtos.RoleRequest;
 import com.oscaris.caterers.auth.dtos.responses.RoleResponse;
 import com.oscaris.caterers.auth.entities.User;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,6 @@ public interface AuthenticationService {
 
     public User signUp(RegisterUserDTO registerUserDTO);
     public User authenticate(LoginUserDTO loginUserDTO);
-    public RoleResponse addRole(RoleRequest request);
-    public String assignRole(String email);
+    public RoleResponse addRole();
+    public String assignAdminRole(String email);
 }

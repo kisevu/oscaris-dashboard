@@ -6,19 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6399e5-aa13-4aeb-a0fd-7feb9d5fce64" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/Role.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/exceptions/GlobalExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/impl/AuthenticationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/impl/AuthenticationImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/kompose/auth-service-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/auth-service-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/kompose/gateway-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/gateway-service-deployment.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,29 +42,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DiscoveryServerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.GatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yaml.auth-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yaml.gateway-service: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;io.bpmstudio.studio.intellij.ui.cubatree.toolwindow.ToolWindowOpener.firstProjectStart&quot;: &quot;false&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/ameda/Downloads/oscaris/oscaris-apis/k8s/kompose&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/home/ameda/Downloads/oscaris/oscaris-apis/src/main/java/com/ameda/compulnyx/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DiscoveryServerApplication.executor": "Run",
+    "Application.GatewayApplication.executor": "Run",
+    "Docker.docker-compose.yaml.auth-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yaml.gateway-service: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.AuthServiceApplication.executor": "Debug",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "business",
+    "io.bpmstudio.studio.intellij.ui.cubatree.toolwindow.ToolWindowOpener.firstProjectStart": "false",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ameda/Downloads/oscaris/oscaris-apis/k8s/kompose",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/home/ameda/Downloads/oscaris/oscaris-apis/src/main/java/com/ameda/compulnyx/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/k8s/kompose" />
@@ -92,7 +89,21 @@
       <recent name="com.oscaris.caterers.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.docker-compose.yaml.auth-service: Compose Deployment">
+  <component name="RunManager" selected="Spring Boot.AuthServiceApplication">
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="auth-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.oscaris.caterers.auth.AuthServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.oscaris.caterers.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
       <deployment type="docker-compose.yml">
         <settings />
@@ -127,6 +138,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.AuthServiceApplication" />
         <item itemvalue="Docker.docker-compose.yaml.auth-service: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yaml.gateway-service: Compose Deployment" />
       </list>

@@ -134,3 +134,4 @@ networks:
 volumes:
   sqlserver-data:
   mongo-data:
+  postgres_data:
