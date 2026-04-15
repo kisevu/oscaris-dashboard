@@ -22,4 +22,7 @@ public class Role {
     private String roleId;
     @Column(nullable = false,unique = true)
     private String name;
+
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin;
 }
