@@ -1,8 +1,6 @@
 package com.oscaris.caterers.auth.exceptions;
 
-import com.oscaris.caterers.auth.exceptions.errors.EmailAddressNotFoundException;
-import com.oscaris.caterers.auth.exceptions.errors.RolesNotRegisteredException;
-import com.oscaris.caterers.auth.exceptions.errors.UserExistsException;
+import com.oscaris.caterers.auth.exceptions.errors.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,5 +31,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .body(new ErrorResponse(302, ex.getMessage(), LocalDateTime.now()));
     }
+
+    @ExceptionHandler(EmailSendFailedException.class)
+    public ResponseEntity<ErrorResponse> handleEmailSendFailed(EmailSendFailedException ex) {
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .body(new ErrorResponse(400, ex.getMessage(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<?> handleTokenExpired(TokenExpiredException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(400, ex.getMessage(), LocalDateTime.now()));
+    }
+
+
 
 }

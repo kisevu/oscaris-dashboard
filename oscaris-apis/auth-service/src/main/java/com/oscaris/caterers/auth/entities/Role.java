@@ -7,7 +7,6 @@ import lombok.*;
  * Author: kev.Ameda
  */
 
-
 @Entity
 @Table(name = "tbl_roles")
 @Getter
