@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private List<Role> roles = new ArrayList<>();
 
     @Column(nullable = false)
-    private boolean enabled;
+    private boolean enabled = false;
 
     @Embedded
     private UserInfo userInfo;

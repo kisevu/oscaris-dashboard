@@ -5,12 +5,15 @@ import com.oscaris.caterers.auth.dtos.RegisterUserDTO;
 import com.oscaris.caterers.auth.dtos.responses.LoginResponse;
 import com.oscaris.caterers.auth.dtos.responses.RoleResponse;
 import com.oscaris.caterers.auth.entities.User;
+import com.oscaris.caterers.auth.exceptions.errors.EmailAddressNotFoundException;
 import com.oscaris.caterers.auth.services.AuthenticationService;
 import com.oscaris.caterers.auth.services.JwtService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * Author: kev.Ameda
@@ -60,5 +63,35 @@ public class AuthResource {
     public ResponseEntity<?> assignAdmin(@RequestParam( name = "email", required = true) String email ){
         String message = authenticationService.assignAdminRole(email);
         return ResponseEntity.ok(message);
+    }
+
+    @GetMapping("/verify")
+    public String verifyEmail(@RequestParam String token) {
+        boolean verified = authenticationService.verifyToken(token);
+        if (verified) {
+            return """
+                <h2>Email verified!</h2>
+                <p>You can now log in to your account.</p>
+                """;
+        } else {
+            return """
+                <h2>Invalid or expired token</h2>
+                <p>Please request a new verification email.</p>
+                """;
+        }
+    }
+
+    @PostMapping("/resend-verification")
+    public ResponseEntity<?> resendVerificationEmail(@RequestParam String email) {
+        try {
+            authenticationService.resendVerificationToken(email);
+            return ResponseEntity.ok(Map.of(
+                    "message", "Verification email sent successfully",
+                    "email", email
+            ));
+        } catch (EmailAddressNotFoundException e) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
 }

@@ -10,11 +10,15 @@ import com.oscaris.caterers.auth.entities.User;
 import com.oscaris.caterers.auth.entities.UserInfo;
 import com.oscaris.caterers.auth.exceptions.errors.EmailAddressNotFoundException;
 import com.oscaris.caterers.auth.exceptions.errors.RolesNotRegisteredException;
+import com.oscaris.caterers.auth.exceptions.errors.TokenExpiredException;
 import com.oscaris.caterers.auth.exceptions.errors.UserExistsException;
 import com.oscaris.caterers.auth.repos.RoleRepository;
 import com.oscaris.caterers.auth.repos.UserRepository;
 import com.oscaris.caterers.auth.services.AuthenticationService;
+import com.oscaris.caterers.auth.services.MailSender;
+import com.oscaris.caterers.auth.services.RoleService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,55 +36,65 @@ public class AuthenticationImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
+    private final RoleService roleService;
+    private final MailSender mailSender;
+    private final VerificationEmailBuilder verificationEmailBuilder;
+
+
+    @Value("${app.baseUrl:http://localhost:8080}")
+    private String baseUrl;
+
+
 
     public AuthenticationImpl(UserRepository userRepository,
                               PasswordEncoder passwordEncoder,
                               AuthenticationManager authenticationManager,
-                              RoleRepository roleRepository) {
+                              RoleRepository roleRepository,
+                              RoleService roleService,
+                              MailSender mailSender,
+                              VerificationEmailBuilder verificationEmailBuilder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.roleRepository = roleRepository;
+        this.roleService = roleService;
+        this.mailSender = mailSender;
+        this.verificationEmailBuilder = verificationEmailBuilder;
     }
 
     @Override
+    @Transactional
     public User signUp(RegisterUserDTO registerUserDTO) {
-        RegisterUserDTO req = RegisterUserDTO.builder()
-                .email(registerUserDTO.getEmail())
-                .password(registerUserDTO.getPassword())
+        // Validate uniqueness FIRST (bug: current check is wrong - see below)
+        if (userRepository.findByEmail(registerUserDTO.getEmail()).isPresent()) {
+            throw new UserExistsException("User with email " + registerUserDTO.getEmail() + " already exists.");
+        }
+
+        UserInfo userInfo = UserInfo.builder()
                 .firstName(registerUserDTO.getFirstName())
                 .lastName(registerUserDTO.getLastName())
                 .photoPath(registerUserDTO.getPhotoPath())
+                .status(0)
                 .build();
-        UserInfo userInfo = UserInfo.builder()
-                .firstName(req.getFirstName())
-                .lastName(req.getLastName())
-                .photoPath(req.getPhotoPath())
-                .status(1)
-                .build();
-        User user = new User(req.getEmail(),
-                passwordEncoder.encode(req.getPassword()),
-                req.getEmail(),userInfo);
+
+        User user = new User(registerUserDTO.getEmail(),
+                passwordEncoder.encode(registerUserDTO.getPassword()),
+                registerUserDTO.getEmail(), userInfo);
         user.setEnabled(false);
-        if(user.getEmail().equals(userRepository.findByEmail(user.getEmail()))){
-            throw new UserExistsException(" user with the provided email exists.");
-        }
+
         Optional<Role> roleUser = roleRepository.findByName("USER");
-
-        /**
-         * ROLE_USER IS BY DEFAULT GIVEN TO ANY NEW REGISTRATION.
-         *  For advanced rising of role, admin role is assigned to a user through an API
-        * */
-        roleUser.ifPresent(role -> user.setRoles(List.of(role)));
-        if (roleUser.isPresent()){
-            return userRepository.save(user);
+        if (roleUser.isEmpty()) {
+            throw new RolesNotRegisteredException("USER role not found. Run addRole() first.");
         }
-        throw new RolesNotRegisteredException(" Roles not added by the admin.");
+        user.setRoles(List.of(roleUser.get()));
+
+        User savedUser = userRepository.save(user);
+        savedUser.getUserInfo().generateVerificationToken();
+        sendVerificationToEmail(savedUser.getEmail(), savedUser.getUserInfo().getVerificationToken());
+
+        return savedUser;
     }
 
-    private UserResponse mapToUserResponse(User user){
-        return null;
-    }
 
     @Override
     public User authenticate(LoginUserDTO loginUserDTO) {
@@ -174,5 +188,59 @@ public class AuthenticationImpl implements AuthenticationService {
                     .build()
                     .getMessage();
         }
+    }
+
+    @Override
+    public List<Role> getRoles() {
+        return roleService.getRoles();
+    }
+
+    @Override
+    public boolean verifyToken(String token) {
+        Optional<User> userOpt = userRepository.findByUserInfoVerificationToken(token);
+        if (userOpt.isEmpty()) {
+            return false;
+        }
+
+        User user = userOpt.get();
+        UserInfo info = user.getUserInfo();
+
+        if (info.isTokenExpired()) {
+            throw new TokenExpiredException("Your token just expired!!!");
+        }
+
+        user.setEnabled(true);
+        info.clearVerificationToken();
+        info.setStatus(1);
+        userRepository.save(user);
+        return true;
+    }
+
+    @Override
+    public void resendVerificationToken(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EmailAddressNotFoundException(
+                        "No account found with email: " + email));
+
+        // Only allow for unverified users
+        if (user.isEnabled()) {
+            throw new RuntimeException("Account already verified");
+        }
+
+        UserInfo userInfo = user.getUserInfo();
+
+        // Generate NEW token (overwrites old)
+        userInfo.generateVerificationToken();
+
+        // Persist updated token
+        userRepository.save(user);
+
+        // Send new email
+        sendVerificationToEmail(email, userInfo.getVerificationToken());
+    }
+
+    private void sendVerificationToEmail(String email, String token){
+        String body = verificationEmailBuilder.buildVerificationEmail(email, token);
+        mailSender.sendEmail(email,"verify your email - Oscaris Caterers",body);
     }
 }
