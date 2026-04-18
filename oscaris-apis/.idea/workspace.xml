@@ -6,15 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6399e5-aa13-4aeb-a0fd-7feb9d5fce64" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/exceptions/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/exceptions/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/impl/AuthenticationImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/services/impl/AuthenticationImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/kompose/gateway-service-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/gateway-service-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/nginx.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/nginx.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/test-lb.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/test-lb.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +49,9 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "Spring Boot.AuthServiceApplication.executor": "Debug",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "business",
+    "git-widget-placeholder": "main",
     "io.bpmstudio.studio.intellij.ui.cubatree.toolwindow.ToolWindowOpener.firstProjectStart": "false",
+    "io.bpmstudio.studio.intellij.ui.tree.toolwindow.ToolWindowOpener.firstProjectStart": "false",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/ameda/Downloads/oscaris/oscaris-apis/k8s/kompose",
     "nodejs_package_manager_path": "npm",
