@@ -3,25 +3,24 @@ package com.oscaris.caterers.auth.services.impl;
 
 import com.oscaris.caterers.auth.dtos.LoginUserDTO;
 import com.oscaris.caterers.auth.dtos.RegisterUserDTO;
-import com.oscaris.caterers.auth.dtos.RoleRequest;
 import com.oscaris.caterers.auth.dtos.responses.RoleResponse;
 import com.oscaris.caterers.auth.dtos.responses.UserResponse;
 import com.oscaris.caterers.auth.entities.Role;
 import com.oscaris.caterers.auth.entities.User;
 import com.oscaris.caterers.auth.entities.UserInfo;
 import com.oscaris.caterers.auth.exceptions.errors.EmailAddressNotFoundException;
+import com.oscaris.caterers.auth.exceptions.errors.RolesNotRegisteredException;
+import com.oscaris.caterers.auth.exceptions.errors.UserExistsException;
 import com.oscaris.caterers.auth.repos.RoleRepository;
 import com.oscaris.caterers.auth.repos.UserRepository;
 import com.oscaris.caterers.auth.services.AuthenticationService;
+import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Author: kev.Ameda
@@ -63,14 +62,20 @@ public class AuthenticationImpl implements AuthenticationService {
                 passwordEncoder.encode(req.getPassword()),
                 req.getEmail(),userInfo);
         user.setEnabled(false);
-        Optional<Role> roleUser = roleRepository
-                .findByName("ROLE_USER");
+        if(user.getEmail().equals(userRepository.findByEmail(user.getEmail()))){
+            throw new UserExistsException(" user with the provided email exists.");
+        }
+        Optional<Role> roleUser = roleRepository.findByName("USER");
+
         /**
          * ROLE_USER IS BY DEFAULT GIVEN TO ANY NEW REGISTRATION.
          *  For advanced rising of role, admin role is assigned to a user through an API
         * */
         roleUser.ifPresent(role -> user.setRoles(List.of(role)));
-        return userRepository.save(user);
+        if (roleUser.isPresent()){
+            return userRepository.save(user);
+        }
+        throw new RolesNotRegisteredException(" Roles not added by the admin.");
     }
 
     private UserResponse mapToUserResponse(User user){
@@ -103,48 +108,60 @@ public class AuthenticationImpl implements AuthenticationService {
         return String.valueOf(code);
     }
 
+    @Transactional
     @Override
-    public RoleResponse addRole(RoleRequest request) {
-        String roleName = request.getRolename();
-        if ( roleName.contains("admin"))  roleName = "ROLE_ADMIN";
-        if ( roleName.contains("user")) roleName = "ROLE_USER";
-        Role role = Role.builder()
-                .name(roleName)
+    public RoleResponse addRole() {
+        Role adminRole = Role.builder()
+                .name("ADMIN")
+                .isAdmin(true)
                 .build();
-        Optional<Role> byName = roleRepository
-                .findByName(role.getName());
-        if (!(role.getName().isEmpty()) || !(byName.isPresent())){
-            roleRepository.save(role);
-            return RoleResponse.builder()
-                    .message(" role created successfully")
-                    .build();
-        } else {
-            return RoleResponse.builder()
-                    .message(" role potentially exists")
-                    .build();
+        Role userRole = Role.builder()
+                .name("USER")
+                .isAdmin(false)
+                .build();
+
+        List<Role> rolesList = roleRepository.findAll();
+
+        if (!rolesList.isEmpty()){
+            throw new RolesNotRegisteredException(" Can't add roles, they are present");
         }
 
+        Set<Role> roles = new HashSet<>();
+        roles.addAll(List.of(adminRole,userRole));
+        roleRepository.saveAll(roles);
+        return RoleResponse.builder()
+                .message("successfully added roles")
+                .build();
     }
 
     @Override
-    public String assignRole(String email) {
+    public String assignAdminRole(String email) {
         Optional<User> userByEmail = userRepository.findByEmail(email);
+
+        //retrieve the role for the user
         Optional<Role> regularRole = userByEmail
                 .get()
                 .getRoles()
                 .stream()
                 .filter(role -> !(role.getIsAdmin()))
                 .findFirst();
-        if (userByEmail.isPresent() && regularRole.isPresent()){
+
+        if (userByEmail.isPresent()){
             // user is discoverable by given email
             // user is not an admin yet
             User user = userByEmail.orElseThrow();
             List<Role> roles = user.getRoles();
+            Role updated  = null;
            for ( Role role: roles ){
-               role.setIsAdmin(true); // re-setting the flag
+               // re-setting the flag
+               role.setIsAdmin(true);
+               //switch from user -> admin
                role.setName("ROLE_ADMIN");
-               roleRepository.save(role);
+              updated = roleRepository.save(role);
            }
+           roles.add(updated);
+           user.setRoles(roles);
+           userRepository.save(user);
             return RoleResponse
                     .builder()
                     .message("Successfully assigned a role of admin.")
