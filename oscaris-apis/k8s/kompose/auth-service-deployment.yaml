@@ -53,7 +53,7 @@ spec:
             - name: SPRING_JPA_MAPPING_CONTEXT_PATH
               value: "classpath*:**/*.class"
             - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_DATA_JPA=DEBUG
-          image: localhost:32000/oscaris-auth-service:latest
+          image: localhost:32000/oscaris-auth-service:1.2
           imagePullPolicy: Always
           name: oscaris-auth-service
           ports:
