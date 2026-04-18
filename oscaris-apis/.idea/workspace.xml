@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9b6399e5-aa13-4aeb-a0fd-7feb9d5fce64" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/api/AuthResource.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/Role.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/oscaris/caterers/auth/entities/Role.java" afterDir="false" />
@@ -19,6 +20,11 @@
       <change beforePath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/auth-service-deployment.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/kompose/auth-service-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/auth-service-service.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/kompose/gateway-service-deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/gateway-service-deployment.yaml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/k8s/kompose/gateway-service-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/kompose/gateway-service-service.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/nginx.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/nginx.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/k8s/test-lb.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/test-lb.yaml" afterDir="false" />
+>>>>>>> 261da04 (ingress controller (nginx) configured with a specified host name as api.oscaris.kitchen.ke and working)
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +52,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.DiscoveryServerApplication.executor&quot;: &quot;Run&quot;,
@@ -67,6 +74,31 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DiscoveryServerApplication.executor": "Run",
+    "Application.GatewayApplication.executor": "Run",
+    "Docker.docker-compose.yaml.auth-service: Compose Deployment.executor": "Run",
+    "Docker.docker-compose.yaml.gateway-service: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "Spring Boot.AuthServiceApplication.executor": "Debug",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "io.bpmstudio.studio.intellij.ui.cubatree.toolwindow.ToolWindowOpener.firstProjectStart": "false",
+    "io.bpmstudio.studio.intellij.ui.tree.toolwindow.ToolWindowOpener.firstProjectStart": "false",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ameda/Downloads/oscaris/oscaris-apis/k8s/kompose",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/home/ameda/Downloads/oscaris/oscaris-apis/src/main/java/com/ameda/compulnyx/Main.java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0"
+>>>>>>> 261da04 (ingress controller (nginx) configured with a specified host name as api.oscaris.kitchen.ke and working)
   }
 }</component>
   <component name="RecentsManager">
