@@ -1,12 +1,15 @@
 
 export interface Company {
   companyName: string;
-  maxOrders: number;
-  minOrders: number;
   kraPin: string;
+  contactPerson: string;
+  count:number;
+  address: Address;
+  phoneNumber: string;
+}
+
+export interface Address {
+  street:string;
   city: string;
-  constituency: string;
-  county: string;
-  street: string;
-  contactPersonNo: string;
+  building: string;
 }
