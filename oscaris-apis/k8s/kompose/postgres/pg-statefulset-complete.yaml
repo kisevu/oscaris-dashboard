@@ -58,13 +58,11 @@ spec:
                   name: oscaris-pg-config
                   key: POSTGRES_DB
             - name: POSTGRES_USER
-#              value: kevin
               valueFrom:
                 secretKeyRef:
                   name: oscaris-pg-secret
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-#              value: Kevin@123
               valueFrom:
                 secretKeyRef:
                   name: oscaris-pg-secret
