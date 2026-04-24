@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oscaris-pg-config
+  namespace: oscaris
+  labels:
+    app: oscaris-pg
+data:
+  POSTGRES_DB: "oscaris_db"
