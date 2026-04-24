@@ -48,13 +48,25 @@ spec:
           ports:
             - containerPort: 5432
               protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: oscaris-pg-config
           env:
             - name: POSTGRES_DB
-              value: oscaris_db
+              valueFrom:
+                configMapKeyRef:
+                  name: oscaris-pg-config
+                  key: POSTGRES_DB
             - name: POSTGRES_USER
-              value: kevin
+              valueFrom:
+                secretKeyRef:
+                  name: oscaris-pg-secret
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
-              value: Kevin@123
+              valueFrom:
+                secretKeyRef:
+                  name: oscaris-pg-secret
+                  key: POSTGRES_PASSWORD
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-data
@@ -63,7 +75,7 @@ spec:
               command:
                 - sh
                 - -c
-                - pg_isready -U kevin -d oscaris_db -h localhost
+                - pg_isready -U $(POSTGRES_USER) -d $(POSTGRES_DB) -h localhost
             initialDelaySeconds: 20
             periodSeconds: 10
             timeoutSeconds: 5
@@ -73,6 +85,6 @@ spec:
               command:
                 - sh
                 - -c
-                - pg_isready -U kevin -h localhost
+                - pg_isready -U $(POSTGRES_USER) -h localhost
             initialDelaySeconds: 60
             periodSeconds: 30
